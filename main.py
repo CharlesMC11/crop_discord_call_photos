@@ -9,6 +9,12 @@ from pathlib import Path
 import cv2 as cv
 import numpy as np
 
+MAX_SCREENSHOT_HEIGHT = 2_234
+MAX_SCREENSHOT_WIDTH = 3_456
+
+MAX_CROPPED_HEIGHT = 1_850
+MAX_CROPPED_WIDTH = 3_426
+
 BLACK_BGR = np.zeros(3, np.uint8)
 MIN_IMG_AREA = 50_000
 MAX_IMG_AREA = MAX_CROPPED_HEIGHT * MAX_CROPPED_WIDTH
