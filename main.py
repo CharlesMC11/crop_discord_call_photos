@@ -46,5 +46,8 @@ if __name__ == "__main__":
     parser.add_argument("image", type=Path, help="image to crop")
     args = parser.parse_args()
 
+    if not args.image.is_file():
+        raise ValueError("Not a valid file")
+
     new_file = crop(args.image)
     print(new_file)
