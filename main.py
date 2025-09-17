@@ -18,12 +18,12 @@ IMAGE_EXTENSIONS = {"png", "jpg", "jpeg"}
 
 
 def crop(image: Path) -> Path:
-    # TODO: Check image resolution first before pre-cropping?
-    img = cv.imread(f"{image}")[256:-64, 512:-64]
-    try:
-        mask = cv.inRange(img, BLACK_BGR, BLACK_BGR)
-    except cv.error:
+    img = cv.imread(f"{image}")
+    if img is None:
         raise ValueError("Empty image")
+
+    img_gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+    mask = cv.threshold(img_gray, 0.001, 255, cv.THRESH_BINARY)[1]
 
     contours = cv.findContours(mask, cv.RETR_CCOMP, cv.CHAIN_APPROX_SIMPLE)[0]
     contours_video = []
@@ -33,7 +33,7 @@ def crop(image: Path) -> Path:
             contours_video.extend(c)
 
     x, y, w, h = cv.boundingRect(np.array(contours_video))
-    img_cropped = img[y + 1: y + h - 1, x + 1: x + w - 1]
+    img_cropped = img[y : y + h, x : x + w]
 
     new_image = image.with_stem(f"{image.stem}{NEW_SUFFIX}")
     cv.imwrite(f"{new_image}", img_cropped)
