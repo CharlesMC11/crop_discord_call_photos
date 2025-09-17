@@ -49,19 +49,19 @@ if ((${#screenshot_files} == 0)); then
 fi
 
 for img in ${==screenshot_files}; do
-  new_img=$(main.py "$img")
-  exiftool -tagsFromFile "$img" '-all<all'\
-    '-MaxAvailWidth<ImageWidth' '-MaxAvailHeight<ImageHeight' "$new_img"
+    new_img=$(main.py "$img")
+
+    exiftool ${is_verbose:+'-verbose'} -tagsFromFile "$img" '-all<all' \
+             '-MaxAvailWidth<ImageWidth' '-MaxAvailHeight<ImageHeight' --\
+             "$new_img"
 done
 
 # patterns that will be used by `tar` and `rm`
 readonly new_filename_subpattern=_new.${SCREENSHOT_EXT}_original
 readonly new_filename_pattern=${orig_filename_pattern/".${SCREENSHOT_EXT}"/"${new_filename_subpattern}"}
 
-tar -czf "originals.tar.gz" -v --options gzip:compression-level=1\
-  ${==screenshot_files} ${~new_filename_pattern}
-
-rm ${==screenshot_files} ${~new_filename_pattern}
-
-autoload -U zmv
-zmv -v '(*)_new.(*)' '$1.$2'
+tar -czf "originals.tar.gz" ${is_verbose:+'-v'}\
+    --options gzip:compression-level=1 ${==screenshot_files}\
+    ${~new_filename_pattern} &&\
+    rm ${==screenshot_files} ${~new_filename_pattern} &&\
+    autoload -U zmv && zmv ${is_verbose:+'-v'} '(*)_new.(*)' '$1.$2'
