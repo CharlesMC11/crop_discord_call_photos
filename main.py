@@ -32,7 +32,7 @@ def crop(image: Path) -> Path:
     mask = cv.threshold(img_gray, 0.001, 255, cv.THRESH_BINARY)[1]
 
     contours = cv.findContours(mask, cv.RETR_CCOMP, cv.CHAIN_APPROX_SIMPLE)[0]
-    contours_video = []
+    contours_video: list[cv.Mat] = []
     for c in contours:
         area = cv.contourArea(c)
         if (area > MIN_IMG_AREA) and (area < MAX_IMG_AREA):
