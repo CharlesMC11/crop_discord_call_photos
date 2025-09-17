@@ -14,7 +14,6 @@ MIN_IMG_AREA = 1 << 16
 MAX_IMG_AREA = 1 << 22
 
 NEW_SUFFIX = "_new"
-
 IMAGE_EXTENSIONS = {"png", "jpg", "jpeg"}
 
 
@@ -34,7 +33,7 @@ def crop(image: Path) -> Path:
             contours_video.extend(c)
 
     x, y, w, h = cv.boundingRect(np.array(contours_video))
-    img_cropped = img[y + 1 : y + h - 1, x + 1 : x + w - 1]
+    img_cropped = img[y + 1: y + h - 1, x + 1: x + w - 1]
 
     new_image = image.with_stem(f"{image.stem}{NEW_SUFFIX}")
     cv.imwrite(f"{new_image}", img_cropped)
