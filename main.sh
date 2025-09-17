@@ -9,11 +9,35 @@ export -Ua path
 path=("${0:A:h}" ${==path})
 
 export -TU PYTHONPATH pythonpath
-pythonpath=("$SCRIPT_DIR" ${==pythonpath})
+pythonpath=("${0:A:h}" ${==pythonpath})
+
+show_usage () {
+    echo "usage: ${SCRIPT_NAME} [-v | --verbose, -h | --help ] [directory]" 1>&2
+}
+
+error_on_invalid_option () {
+    echo "${SCRIPT_NAME}: invalid option -- $1" 1>&2
+    show_usage
+    exit 1
+}
 
 ################################################################################
 
-cd "$TARGET_DIR" || exit 1
+while (($#)); do
+    case $1 in
+        -h | --help   ) show_usage; exit
+        ;;
+        -v | --verbose) integer -r is_verbose=1
+        ;;
+        -* | --*      ) error_on_invalid_option $1
+        ;;
+        *             ) if [[ -d $1 ]]; then cd $1; break
+                        else error_on_invalid_option $1
+                        fi
+        ;;
+    esac
+    shift
+done
 
 setopt EXTENDED_GLOB
 readonly orig_filename_pattern="<-99><-12><-31>_<-23><-59><-59>[^[:digit:]]#<-99>#.${SCREENSHOT_EXT}(.N)"
