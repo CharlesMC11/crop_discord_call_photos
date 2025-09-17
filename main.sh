@@ -1,13 +1,12 @@
 #!/opt/homebrew/bin/zsh -f
 # A script for cropping screenshots taken during Discord video calls
 
-readonly SCRIPT_DIR=${0:A:h}
-readonly TARGET_DIR=${1:A}
+readonly SCRIPT_NAME=${0:t2:r}
 
 readonly SCREENSHOT_EXT=png
 
 export -Ua path
-path=("$SCRIPT_DIR" ${==path})
+path=("${0:A:h}" ${==path})
 
 export -TU PYTHONPATH pythonpath
 pythonpath=("$SCRIPT_DIR" ${==pythonpath})
