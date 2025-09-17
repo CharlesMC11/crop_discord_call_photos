@@ -10,8 +10,8 @@ import cv2 as cv
 import numpy as np
 
 BLACK_BGR = np.zeros(3, np.uint8)
-MIN_IMG_AREA = 1 << 16
-MAX_IMG_AREA = 1 << 22
+MIN_IMG_AREA = 50_000
+MAX_IMG_AREA = MAX_CROPPED_HEIGHT * MAX_CROPPED_WIDTH
 
 NEW_SUFFIX = "_new"
 IMAGE_EXTENSIONS = {"png", "jpg", "jpeg"}
