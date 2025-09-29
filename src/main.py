@@ -20,7 +20,7 @@ MIN_IMG_AREA = 50_000
 MAX_IMG_AREA = MAX_CROPPED_HEIGHT * MAX_CROPPED_WIDTH
 
 NEW_SUFFIX = "_new"
-IMAGE_EXTENSIONS = {"png", "jpg", "jpeg", "tif", "tiff"}
+IMAGE_EXTENSIONS = {"heif", "jpeg", "jpg", "png", "tif", "tiff"}
 
 
 def crop(image: Path) -> Path:
