@@ -1,4 +1,3 @@
-#!/opt/homebrew/bin/python3
 """A script for cropping screenshots taken during Discord video calls"""
 
 __author__ = "Charles Mesa Cayobit"

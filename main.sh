@@ -6,7 +6,7 @@ readonly SCRIPT_NAME=${0:t2:r}
 readonly SCREENSHOT_EXT=png
 
 export -Ua path
-path=("${0:A:h}" ${==path})
+path=("${0:A:h}/.venv/bin" "${0:A:h}" ${==path})
 
 export -TU PYTHONPATH pythonpath
 pythonpath=("${0:A:h}" ${==pythonpath})
@@ -49,7 +49,7 @@ if ((${#screenshot_files} == 0)); then
 fi
 
 for img in ${==screenshot_files}; do
-    new_img=$(main.py "$img")
+    new_img=$(python3 -m "${SCRIPT_NAME:h}" "$img")
 
     exiftool ${is_verbose:+'-verbose'} -tagsFromFile "$img" '-all<all' \
              '-MaxAvailWidth<ImageWidth' '-MaxAvailHeight<ImageHeight' --\
