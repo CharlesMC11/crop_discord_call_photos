@@ -1,0 +1,9 @@
+[project]
+name = "crop-discord-call-photos"
+version = "0.1.0"
+description = "A script for cropping screenshots taken during Discord video calls"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "opencv-python>=4.12.0.88",
+]

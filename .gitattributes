@@ -1,0 +1,6 @@
+*      text=auto
+
+*.git* text
+
+*.md   text diff=markdown
+*.py   text diff=python
